@@ -1,0 +1,4 @@
+//https://app.codesignal.com/arcade/db/time-for-tricks/wcjiSDNohjXc2tpQM/solutions
+
+
+ select round(exp(sum(log(length(characters))))) as combinations from discs;

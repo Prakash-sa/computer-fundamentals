@@ -1,0 +1,4 @@
+
+//The following SELECT statement lists down all the records where NAME starts with 'Pa', does not matter what comes after 'Pa'.
+// _ stands for 1 char and % stands for any number of char
+SELECT * FROM COMPANY WHERE NAME LIKE 'Pa%';

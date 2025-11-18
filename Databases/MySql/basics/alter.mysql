@@ -1,0 +1,9 @@
+ALTER TABLE People ADD DateOfBirth date;
+
+
+ALTER TABLE People DROP COLUMN DateOfBirth;
+
+
+
+ALTER TABLE People CHANGE FirstName name varchar(100);
+//RENAME TABLE People TO Users;

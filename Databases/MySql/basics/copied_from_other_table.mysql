@@ -1,0 +1,4 @@
+//create a new table which consists of data and structure copied from the other table.
+
+SELECT * INTO NewTable FROM EmployeeInfo WHERE 1 = 0;
+CREATE TABLE NewTable AS SELECT * FROM EmployeeInfo;

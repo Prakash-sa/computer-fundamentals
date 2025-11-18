@@ -1,0 +1,12 @@
+
+
+CREATE TABLE COMPANY7(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT,
+   AGE            INT  ,
+   ADDRESS        CHAR(50),
+   SALARY         REAL,
+   EXCLUDE USING gist
+   (NAME WITH =,
+   AGE WITH <>)
+);

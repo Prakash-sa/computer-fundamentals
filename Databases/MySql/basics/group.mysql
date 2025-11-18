@@ -1,0 +1,7 @@
+//https://app.codesignal.com/arcade/db/group-dishes-by-type/fmKsqx7Aafhh6wqmq/drafts
+
+select item_name,item_type,count(*) as item_count from availableItems group by 1,2 order by 2,1;
+
+//https://app.codesignal.com/arcade/db/group-dishes-by-type/QnrrbsfdAjNLwkRL2/solutions
+
+select continent,sum(users) as users from countries group by 1 order by 2 desc;

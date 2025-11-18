@@ -1,0 +1,3 @@
+(SELECT * FROM Worker)
+INTERSECT
+(SELECT * FROM WorkerClone);

@@ -1,0 +1,6 @@
+//https://app.codesignal.com/arcade/db/group-dishes-by-type/PPNoC7RpXJPGQcqi2/solutions
+
+//The HAVING clause must follow the GROUP BY clause in a query and must also precede the ORDER BY clause if used.
+
+
+select director from moviesInfo where year>2000 group by 1 having sum(oscars)>2  order by 1;

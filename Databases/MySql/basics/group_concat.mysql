@@ -1,0 +1,9 @@
+//https://app.codesignal.com/arcade/db/group-dishes-by-type/p7k9JJ5fqyD6DdFZJ/solutions
+
+select group_concat(distinct(country) order by country separator';') as countries from diary;
+
+
+
+//https://app.codesignal.com/arcade/db/group-dishes-by-type/sCBZwoRFQv2TstL9m/solutions
+
+select group_concat(first_name,' ',surname,' #',player_number order by player_number separator '; ') as players from soccer_team;

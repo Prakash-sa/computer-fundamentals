@@ -1,0 +1,7 @@
+
+
+CREATE TABLE DEPARTMENT1(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      references COMPANY6(ID)
+);

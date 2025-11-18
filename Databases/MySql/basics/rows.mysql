@@ -1,0 +1,8 @@
+//even rows
+SELECT * FROM Worker WHERE MOD (WORKER_ID, 2) = 0;
+Select * from table where id % 2 = 0 
+
+
+//odd rows
+SELECT * FROM Worker WHERE MOD (WORKER_ID, 2) <> 0;
+Select * from table where id % 2 != 0

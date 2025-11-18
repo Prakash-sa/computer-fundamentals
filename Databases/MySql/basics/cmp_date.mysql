@@ -1,0 +1,4 @@
+
+
+SELECT * FROM OrderArchive
+WHERE OrderDate <= to_date('31 Dec 2014','DD MON YYYY');

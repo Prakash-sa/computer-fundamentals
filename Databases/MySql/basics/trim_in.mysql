@@ -1,0 +1,3 @@
+//https://app.codesignal.com/arcade/db/time-for-tricks/hB9cqdzPpijpE9ttD/solutions
+
+select count(id) as number_of_nulls from departments where description is null or trim(description) in ('null','nil','-');

@@ -1,0 +1,2 @@
+SELECT * FROM Students 
+WHERE ROLL_NO IN (20,21,23);

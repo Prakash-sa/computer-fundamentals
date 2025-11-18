@@ -1,0 +1,2 @@
+SELECT ST_Area(ST_ConvexHull(ST_GeomFromText(CONCAT("MULTIPOINT (",GROUP_CONCAT(x,' ',y SEPARATOR ", "),")"),0))) AS area
+    FROM places;

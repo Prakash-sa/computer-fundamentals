@@ -1,0 +1,3 @@
+//https://app.codesignal.com/arcade/db/join-us-at-the-table/zoJksWsAGX8NiimFN/solutions
+
+select * from departments cross join employees order by dep_name,emp_name;

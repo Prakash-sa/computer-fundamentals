@@ -1,0 +1,3 @@
+//https://app.codesignal.com/arcade/db/group-dishes-by-type/47JJ5SEJHSdLusQeQ/solutions
+
+select ifnull(country,"Total:") as country,count(*) as competitors from foreignCompetitors group by country with rollup;
