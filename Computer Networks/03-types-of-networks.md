@@ -1,20 +1,33 @@
 # Types of Networks
 
 ## LAN (Local Area Network)
-- Covers a small geographic area such as a home, office, or campus building.
-- Offers high speeds ranging from 100 Mbps to 10+ Gbps using Ethernet or Wi-Fi.
-- Typically administered by a single organization with centralized control.
+- Limited to a building, floor, or campus; owned and managed by a single organization.
+- Technologies: Ethernet switching (100 Mbps–400 Gbps), Wi-Fi, PoE for devices.
+- Interview Q: *"How would you isolate departments on a LAN?"* — Use VLANs, ACLs, or microsegmentation.
 
 ## WAN (Wide Area Network)
-- Spans cities, countries, or continents using leased lines, fiber, satellite, or MPLS.
-- Lower bandwidth relative to LANs due to distance and provider costs.
-- Connects multiple LANs together (e.g., HQ to branch offices or data centers).
+- Spans regions/countries, typically leased from service providers; includes MPLS, leased fiber, satellite, and SD-WAN overlays.
+- Lower speeds and higher latency than LAN due to propagation distance.
+- Interview Q: *"Why choose SD-WAN over traditional MPLS?"* — cost savings, dynamic path selection, centralized policy.
 
 ## MAN (Metropolitan Area Network)
-- Bridges the gap between LAN and WAN by covering an entire city or metro region.
-- Often implemented by telecom providers as high-capacity backbones for enterprises, campuses, and mobile carriers.
+- Bridges multiple LANs within a city; carriers offer metro Ethernet or dark fiber rings.
+- Often acts as a distribution layer feeding into WAN/Internet gateways.
 
-## Additional Network Categories
-- **PAN (Personal Area Network):** Short-range Bluetooth, NFC, or USB connections between wearable devices.
-- **CAN (Campus Area Network):** Aggregates multiple LANs across a university or business park.
-- **SD-WAN:** Overlay WAN that uses policy-based routing over multiple Internet circuits to optimize cost and performance.
+## Additional Categories
+- **PAN (Personal Area Network):** Bluetooth, NFC, Zigbee for wearables and sensors; range of a few meters.
+- **CAN (Campus Area Network):** Aggregates multiple LAN buildings with high-speed fiber cores.
+- **SAN (Storage Area Network):** Dedicated network (Fibre Channel, iSCSI) for block storage traffic.
+- **SD-WAN:** Policy-driven overlay leveraging broadband, LTE, and MPLS simultaneously.
+
+## Comparison Cheat Sheet
+| Feature | LAN | MAN | WAN |
+|--------|-----|-----|-----|
+| Area | Room/Campus | City | Country/Global |
+| Speed | 100 Mbps–400 Gbps | 1–100 Gbps | 1 Mbps–100 Gbps |
+| Ownership | Private | Carrier/Shared | Carrier/Multiple |
+| Protocols | Ethernet, Wi-Fi | Metro Ethernet, DWDM | MPLS, IPsec, BGP |
+
+## Interview Rapid Fire
+- *"Which network type is best for IoT sensors spread across a farm?"* — LPWAN (LoRaWAN, NB-IoT) combining WAN reach with low power.
+- *"How do you secure branch offices over the Internet?"* — VPN tunnels, ZTNA, and SD-WAN with integrated firewalls.

@@ -1,24 +1,30 @@
 # Routing
 
 ## Definition
-Routing is the process of selecting the best path for packets to travel from source to destination across interconnected networks.
+Routing selects the optimal path for packets to traverse interconnected networks by consulting routing tables and metrics.
 
-## Types of Routing
-- **Static routing:** Administrator manually configures next-hop entries; simple but not scalable.
-- **Dynamic routing:** Routers exchange information to adapt to topology changes.
+## Routing Types
+- **Static Routing:** Admin-defined next hops; simple and predictable but does not adapt automatically.
+- **Dynamic Routing:** Protocols exchange topology information to converge on the best paths.
 
 ## Dynamic Protocol Families
-- **RIP (Routing Information Protocol):** Distance-vector, hop-count metric, suitable for small networks.
-- **OSPF (Open Shortest Path First):** Link-state, uses Dijkstra’s algorithm and areas for scalability.
-- **BGP (Border Gateway Protocol):** Path-vector protocol that powers Internet-wide routing between autonomous systems.
+- **Distance Vector:** RIP, RIPv2—routers share entire routing tables periodically; metric = hop count.
+- **Link State:** OSPF, IS-IS—routers flood link states, build a topology map, and run Dijkstra's SPF algorithm.
+- **Path Vector:** BGP—routers exchange AS paths, policies, and attributes (MED, LocalPref) suited for Internet-scale routing.
+- **Hybrid:** EIGRP blends distance vector and link-state concepts.
 
 ## Router Responsibilities
-- Maintain and update routing tables.
-- Forward packets based on destination IP.
-- Perform NAT/PAT, QoS marking, and policy-based routing when configured.
-- Apply access control lists (ACLs) or firewall rules to enforce security policies.
+- Maintain routing tables/FIBs, forward packets, apply ACLs, NAT/PAT, QoS, and policy-based routing.
+- Participate in redundancy protocols (HSRP, VRRP, GLBP) for gateway resilience.
+- Support features like NetFlow/IPFIX for telemetry.
 
-## Additional Considerations
-- **Convergence time:** How quickly the network responds to failures.
-- **Metrics:** Cost, bandwidth, delay, reliability determine path selection.
-- **Redundancy:** Dual routers, VRRP/HSRP, and ECMP keep traffic flowing during outages.
+## Interview Hot Topics
+- *"Explain the difference between OSPF areas and BGP autonomous systems."* — OSPF hierarchical design within one organization vs BGP between autonomous systems.
+- *"What is convergence time?"* — Duration for routers to agree on routes after a change; critical for uptime.
+- *"How does ECMP work?"* — Equal-cost multipath load balances traffic across multiple links with the same metric.
+- *"Describe route redistribution."* — Injecting routes from one protocol into another with care to avoid loops.
+
+## Troubleshooting Tips
+- Verify interface status and neighbor adjacencies (`show ip ospf neighbor`, `show ip bgp summary`).
+- Use `traceroute` to observe path changes; compare with routing tables.
+- Monitor for route flapping or dampening triggers in BGP environments.

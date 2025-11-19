@@ -1,26 +1,27 @@
 # Common Interview Diagram
 
-When a user loads `www.google.com`, each OSI layer plays a part:
+## Layered Walkthrough When Loading `www.google.com`
+| OSI Layer | Action |
+|-----------|--------|
+| Application | Browser constructs an HTTP GET request with headers and cookies. |
+| Presentation | TLS encrypts the payload, negotiates cipher suites, and handles compression if enabled. |
+| Session | TLS session/SSL context maintains handshake parameters and renegotiation. |
+| Transport | TCP establishes the three-way handshake (SYN, SYN-ACK, ACK) and manages sequencing/acknowledgments. |
+| Network | IP addresses guide packets through routers across ISPs and backbone networks; TTL decrements each hop. |
+| Data Link | Ethernet or Wi-Fi frames encapsulate the packets hop-by-hop using MAC addresses. |
+| Physical | Bits traverse copper, fiber, or RF spectrum as electrical/optical signals. |
 
-| Layer | Role in the Request |
-|-------|---------------------|
-| Application | Browser issues an HTTP GET request. |
-| Presentation | TLS encrypts the HTTP payload before transmission. |
-| Session | SSL/TLS session maintains state and renegotiation. |
-| Transport | TCP performs a three-way handshake and provides reliable delivery. |
-| Network | IP addresses route the packet across ISPs and backbone routers. |
-| Data Link | Ethernet/Wi-Fi frames deliver packets hop-by-hop. |
-| Physical | Bits traverse copper, fiber, or wireless spectrum. |
-
-## Visualization
 ```
 Application  → HTTP
 Presentation → TLS
-Session      → SSL session
-Transport    → TCP (3-way handshake)
+Session      → SSL/TLS session
+Transport    → TCP handshake
 Network      → IP routing
-Data Link    → Ethernet frame
-Physical     → Bits on cable/wireless
+Data Link    → Ethernet/Wi-Fi frame
+Physical     → Bits on the medium
 ```
 
-Remembering this "stack walk" helps answer interview questions such as “What happens when you type a URL into a browser?”
+## Interview Tips
+- Be ready to elaborate on each layer when asked "What happens when you type a URL into your browser?"
+- Mention DNS lookup, TCP/TLS handshakes, ARP resolution, routing, and rendering steps for a comprehensive answer.
+- Include performance considerations (CDN, caching) or security layers (HSTS, certificate validation) to stand out.

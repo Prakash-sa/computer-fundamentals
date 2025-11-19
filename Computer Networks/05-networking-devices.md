@@ -1,22 +1,32 @@
 # Networking Devices
 
 ## Modem
-- Modulates digital data into analog signals and demodulates incoming analog signals.
-- Interfaces end-user equipment with ISP infrastructure (DSL, cable, fiber ONT).
+- Converts digital signals to analog (and back) for DSL, cable, or fiber services.
+- Can be standalone or integrated with routers/firewalls provided by ISPs.
 
 ## Router
-- Routes packets between different IP networks using routing tables and protocols.
-- Performs NAT/PAT, firewall filtering, and VPN termination on many edge devices.
+- Operates at Layer 3, selecting next hops using routing tables and protocols.
+- Performs NAT/PAT, firewalling, VPN termination, DHCP, and QoS in branch deployments.
+- Interview Q: *"Difference between router and default gateway?"* — the gateway is the router IP configured on hosts.
 
 ## Switch
-- Operates at Layer 2, forwarding frames based on MAC addresses.
-- Creates separate collision domains per port and supports VLAN segmentation, QoS, and PoE.
+- Layer 2 device building MAC address tables to forward frames per port.
+- Supports VLANs, trunking (802.1Q), PoE, STP/RSTP, QoS, port mirroring, and sometimes Layer 3 routing.
+- Interview Q: *"How does a switch learn MAC addresses?"* — inspects source MAC of incoming frames and associates it with the ingress port.
 
 ## Hub
-- Legacy repeater that broadcasts incoming bits to all ports without inspection.
-- Creates a single collision domain; largely obsolete but useful for lab sniffing.
+- Multiport repeater broadcasting every bit to all ports; creates one collision domain.
+- Rare today but still referenced in CCNA/ITF+ fundamentals.
 
-## Additional Building Blocks
-- **Access points:** Provide Wi-Fi connectivity and bridge wireless devices to the wired LAN.
-- **Gateways:** Translate between different protocol families or industrial buses and IP networks.
-- **Security appliances:** Firewalls, IDS/IPS, and proxies enforce policies at network boundaries.
+## Access Point
+- Bridges wireless clients to the wired network; handles authentication (802.1X), roaming, and RF optimization.
+
+## Firewall/UTM
+- Filters traffic based on rules; modern appliances incorporate IDS/IPS, anti-malware, and SSL decryption.
+
+## Load Balancer / ADC
+- Distributes traffic across multiple servers at L4/L7, offloading TLS and providing health checks.
+
+## Interview Cheat Sheet
+- *"What is the function of a Layer 3 switch?"* — Combines switching and routing, often used for inter-VLAN routing.
+- *"Why use a gateway instead of connecting directly to the Internet?"* — Enforces security, NATs private IPs, and provides policy control.
