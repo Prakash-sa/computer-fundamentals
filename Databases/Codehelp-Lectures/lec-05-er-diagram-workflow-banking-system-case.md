@@ -23,84 +23,76 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-* stepsto make ER diagram1-
- identifyEntitysets.
- identifyattributes& their types.
- "
-Rel" & constraints
- Mapping Participation__
-* F-R-moddof-B-ank.mgSystem
- Bankingsystem- Branches.
-( maf)
- Bank customers.
- Customers- accounts.
-, & take loan.
- Customer associatedwith some banker.
- Bank has employees.
- Accounts-
-savingall\ current a /c.
- Loan originatedby branch
-loan  1 customers.
-paymentschedules.
- Entitysets
- Branch  Customer  Employee
- SavingA/c  Currenta/c
- Loan  paymentKwan) ( weakentity?
- Attributes: -
- branch Lame, city, arrests, liabilities
- Customer cent- id , name , address, contact no .
-DOBTage,   Composite.
-multicolored.
-derived.
- Genployee acid, name , contactno ,
-, dependentname ,
-yearsof service, stat - date  mltivalued.
-derivedaltnhr singlevalued.
- Savingaccount intent - rate
-, dailywithdrawallimit.
- Unmeta/c af , pertanaetwnchanges,
-overdraft- amount.
-GeneralizedEntity"
-Account"
- ace - no ,
-, balance
- Loan lber , amount
- WeakEntityPayment Paymentno .
-, date, amount.
- Rel"
-& constants.
- Customer borrow loans,
-M : N
-=
- Loan originatedby branch.
-N % r
-
- Loan loan-
-payment Payment.
-=
- % N
- Customer deposit account
-M % N
- Customer banker Employee.
-N % A
- Cenployee manageby Employee.
-N % I
-sta mi-tbranI
--  Paymg!PYmntdcuwd# originated1 by
-\ / in loanborrow_tLoan T-
-payment   t.nmton.IM
-M loan=am
-aecont-mn-yhfybalane.ecbanker
-,w deposit
-n /accounts / 
-?PyT managedby is-
-a
 dai1ynthdm!ua limit
-"
-iammtak=-Plsay.mg#-changeshave
-ovw-draftamowt@pinterest.at#
-"#  Onlinedeliverysystem.
- University
+1. Steps to create an ER diagram
+  a. Identify entity sets.
+  b. Identify attributes and their types (simple, composite, multi-valued, derived).
+  c. Identify relationships and constraints (cardinality, participation).
+  d. Map relationships and participation constraints; mark weak entities where applicable.
+
+2. Banking system case (conceptual model)
+  - Key entity sets: Branch, Customer, Employee, Account (Savings, Current), Loan, Payment (weak).
+  - Overview: Branches serve customers; customers hold accounts and may take loans; loans are originated by branches; payments are scheduled against loans; employees (bankers) are associated with customers/branches.
+
+3. Entity sets (examples)
+  - Branch
+  - Customer
+  - Employee
+  - SavingAccount (Savings A/c)
+  - CurrentAccount (Current A/c)
+  - Loan
+  - Payment (weak entity tied to Loan)
+
+4. Attributes (examples and types)
+  - Branch: branch_name, city, assets, liabilities
+  - Customer: customer_id (PK), name, address, contact_no, DOB (can derive age)
+    - Composite attributes: address (street, city, state, PIN)
+    - Multi-valued: phone_numbers
+    - Derived: age (from DOB)
+  - Employee: employee_id (PK), name, contact_no, dependents (multi-valued), years_of_service, start_date
+  - SavingsAccount: account_no (PK), balance, interest_rate, daily_withdrawal_limit
+  - CurrentAccount: account_no (PK), balance, overdraft_amount
+  - Loan: loan_id (PK), amount, loan_type
+  - Payment (weak): payment_no (partial key), date, amount (weak entity keyed by loan_id + payment_no or surrogate)
+
+5. Generalization / Specialization
+  - Account can be a generalized entity with SavingsAccount and CurrentAccount as specializations sharing account_no and balance.
+
+6. Relationships and cardinalities (examples)
+  - Customer borrows Loan: M:N (a customer can have many loans; a loan may be associated with multiple customers in co-borrower scenarios).
+  - Loan originatedBy Branch: N:1 (each loan is originated by one branch; a branch can originate many loans).
+  - Loan has Payment: 1:N (a loan has many payments/scheduled installments).
+  - Customer owns Account: M:N (customers can own multiple accounts; accounts may have multiple authorized holders).
+  - Customer — Banker(Employee): N:M or N:1 depending on rules (each customer may be associated with one banker or many; model according to requirements).
+  - Employee manages Branch (works_at): N:1 (many employees work at one branch).
+
+7. Notes on keys and weak entities
+  - For Payment (weak entity): use composite key (loan_id, payment_no) or a surrogate PK and enforce uniqueness on (loan_id, payment_no) to preserve installment order.
+  - For account-holder relationships where multiple customers can access an account, model an associative entity (AccountHolder) with role and ownership percentage if needed.
+
+8. Additional modeling considerations
+  - Model multi-valued attributes (phones, dependents) as separate related tables to avoid repeated columns.
+  - Capture constraints such as daily withdrawal limits, overdraft amounts, and interest rates as attributes on account entities.
+  - Where business rules require, record audit information (created_by, created_at) on transactions and schedules.
+
+9. Workflow tip
+  - Start with a high-level ER diagram (entities and major relationships), then refine by adding attributes, cardinalities, participation constraints, and weak entities; finally map to relational schema (tables, PKs, FKs, and constraints).
+
+10. Example mapping summary (quick)
+  - Branch(branch_id PK, name, city, assets, liabilities)
+  - Customer(customer_id PK, name, address, contact_no, DOB)
+  - Employee(employee_id PK, name, contact_no, branch_id FK)
+  - Account(account_no PK, balance, type, branch_id FK)
+  - SavingsAccount(account_no PK, interest_rate, daily_withdrawal_limit)
+  - CurrentAccount(account_no PK, overdraft_amount)
+  - Loan(loan_id PK, amount, originated_branch_id FK)
+  - Payment(payment_id PK or composite (loan_id, payment_no), loan_id FK, date, amount)
+
+11. Interview-ready talking points
+  - Explain how you would choose primary keys (natural vs surrogate) and when to use composite keys (e.g., scheduled payments).
+  - Describe how to model multi-valued attributes and weak entities.
+  - Show how generalization (Account -> Savings/Current) reduces duplication.
+  - Discuss trade-offs (denormalization for performance vs strict normalization for data integrity).
 ```
 
 </details>

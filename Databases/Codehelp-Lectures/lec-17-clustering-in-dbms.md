@@ -23,30 +23,25 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-1. Database Clustering (making Replica-sets) is the process of combining more than one servers or instances connecting a single database.
-Sometimes one server may not be adequate to manage the amount of data or the number of requests, that is when a Data Cluster is needed.
-Database clustering, SQL server clustering, and SQL clustering are closely associated with SQL is the language used to manage the database
-information.
-2. Replicate the same dataset on different servers.
-3. Advantages
-1. Data Redundancy: Clustering of databases helps with data redundancy, as we store the same data at multiple servers. Dont confuse this
-data redundancy as repetition of the same data that might lead to some anomalies. The redundancy that clustering offers is required and is
-quite certain due to the synchronisation. In case any of the servers had to face a failure due to any possible reason, the data is available at other
-servers to access.
-2. Load balancing: or scalability doesnt come by default with the database. It has to be brought by clustering regularly. It also depends on the
-setup. Basically, what load balancing does is allocating the workload among the different servers that are part of the cluster. This indicates that
-more users can be supported and if for some reasons if a huge spike in the traf c appears, there is a higher assurance that it will be able to
-support the new trafc. One machine is not going to get all of the hits. This can provide scaling seamlessly as required. This links directly to
-high availability. Without load balancing, a particular machine could get overworked and traf c would slow down, leading to decrement of
-the trafc to zero.
-3. High availability: When you can access a database, it implies that it is available. High availability refers the amount of time a database is
-considered available. The amount of availability you need greatly depends on the number of transactions you are running on your database
-and how often you are running any kind of analytics on your data. With database clustering, we can reach extremely high levels of availability
-due to load balancing and have extra machines. In case a server got shut down the database will, however, be available.
-4. How does Clustering Work?
-1. In cluster architecture, all requests are split with many computers so that an individual user request is executed and produced by a number of
-computer systems. The clustering is serviceable denitely by the ability of load balancing and high-availability. If one node collapses, the
-request is handled by another node. Consequently, there are few or no possibilities of absolute system failures.
+1. What is database clustering?
+  - Clustering groups multiple database servers (nodes) to provide redundancy, scale, and high availability for the same dataset.
+
+2. Replication models
+  - Synchronous replication: replicas apply updates before commit (stronger guarantees, higher latency).
+  - Asynchronous replication: replicas apply updates later (lower write latency, possible replication lag and stale reads).
+
+3. Benefits of clustering
+  - Redundancy: multiple copies of the data reduce single-point-of-failure risk.
+  - Load balancing: distribute client requests across nodes to increase throughput and handle traffic spikes.
+  - High availability: failover and replica promotion help keep the service online during node failures.
+
+4. Operational concerns
+  - Replication lag: delay between primary and replicas may cause stale reads; choose consistency model accordingly.
+  - Failover and split-brain: use quorum/election protocols and fencing to avoid conflicting primaries.
+  - Consistency vs availability trade-offs depend on replication mode and network partitions.
+
+5. How clustering works (high-level)
+  - Nodes share replicated data; a load balancer or proxy routes requests. If one node fails, the system routes traffic to healthy nodes and can promote replicas when needed.
 ```
 
 </details>

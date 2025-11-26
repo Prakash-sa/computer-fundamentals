@@ -24,47 +24,31 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-1. Transaction
-1. A unit of work done against the DB in a logical sequence.
-2. Sequence is very important in transaction.
-3. It is a logical unit of work that contains one or more SQL statements. The result of all these statements in a
-transaction either gets completed successfully (all the changes made to the database are permanent) or if at any
-point any failure happens it gets rollbacked (all the changes being done are undone.)
-2. ACID Properties
-1. To ensure integrity of the data, we require that the DB system maintain the following properties of the transaction.
-2. Atomicity
-1. Either all operations of transaction are re flected properly in the DB, or none are.
-3. Consistency
-1. Integrity constraints must be maintained before and after transaction.
-2. DB must be consistent after transaction happens.
-4. Isolation
-1. Even though multiple transactions may execute concurrently, the system guarantees that, for every pair of
-transactions Ti and Tj, it appears to Ti that either Tj finished execution before Ti started, or Tj started execution
-after Ti finished. Thus, each transaction is unaware of other transactions executing concurrently in the system.
-2. Multiple transactions can happen in the system in isolation, without interfering each other.
-5. Durability
-1. After transaction completes successfully, the changes it has made to the database persist, even if there are
-system failures.
-3. Transaction states
-1. Active state
-1. The very first state of the life cycle of the transaction, all the read and write operations are being
-performed. If they execute without any error the T comes to Partially commi tted state. Although if any
-error occurs then it leads to a Failed state.
-2. Partially committed state
-1. After transaction is executed the changes are saved in the bu er in the main memory. If the changes made
-are permanent on the DB then the state will transfer to the commi tted state and if there is any failure, the T
-will go to Failed state.
-3. Committed state
-1. When updates are made permanent on the DB. Then the T is said to be in the committed state. Rollback
-cant be done from the committed states. New consistent state is achieved at this stage.
-4. Failed state
-1. When T is being executed and some failure occurs. Due to this it is impossible to continue the execution of
-the T.
-5. Aborted state
-1. When T reaches the failed state, all the changes made in the buer are reversed. After that the T rollback
-completely. T reaches abort state after rollback. DBs state prior to the T is achieved.
-6. Terminated state
-1. A transaction is said to have terminated if has either commi tted or aborted.
+1. Transaction definition
+  - A transaction is a logical unit of work composed of one or more SQL statements executed as a single unit.
+  - Either all statements succeed and their effects persist, or on failure the effects are rolled back.
+
+2. ACID properties
+  - Atomicity: all-or-nothing execution — either every operation in a transaction is applied, or none are.
+  - Consistency: the database moves from one valid state to another; integrity constraints must hold before and after.
+  - Isolation: concurrent transactions behave as if executed serially (each transaction is unaware of others' intermediate states).
+  - Durability: once a transaction commits, its changes survive subsequent failures (persisted to stable storage).
+
+3. Transaction states (lifecycle)
+  - Active: transaction starts and executes reads/writes.
+  - Partially committed: after successful execution but before changes become permanent (often buffered).
+  - Committed: changes are made durable; cannot be rolled back.
+  - Failed: an error occurred preventing successful completion.
+  - Aborted: after rollback, the transaction ends and prior state is restored.
+  - Terminated: transaction has either committed or aborted.
+
+4. Concurrency and isolation
+  - Schedules: serial, serializable — serializable schedules preserve correctness under concurrency.
+  - Isolation levels (e.g., Read Uncommitted, Read Committed, Repeatable Read, Serializable) trade performance for stronger guarantees.
+
+5. Practical notes
+  - Use explicit transaction boundaries (START TRANSACTION / COMMIT / ROLLBACK) or connection autocommit controls.
+  - Employ appropriate isolation level for the workload and use locks or optimistic concurrency control where needed.
 ```
 
 </details>

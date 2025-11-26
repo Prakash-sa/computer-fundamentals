@@ -1,59 +1,67 @@
 # Lec-08: Transform - ER Model to Relational Model
 
 ## Quick Highlights
-- Goal: convert ER designs into relational schemas while keeping semantics.
-- Strong entities become tables with PK; weak entities include owner PK in composite key.
-- M:N relationships become bridge tables with both FKs plus relationship attributes.
-- Multivalued attributes move to separate tables; specialization handled via PK/FK patterns.
+1. Overview
+  - ER and relational models both provide abstract logical representations of real-world enterprises. Because they
+    follow similar design principles, ER designs can be systematically transformed into relational schemas.
 
-## Diagram
-```mermaid
-flowchart LR
-    ER[ER Diagram] --> Entities[Strong/Weak Entities]
-    Entities --> Relations[Tables with PK/FK]
-    Attributes[Attributes & multivalued fields] --> Normalised[Flattened columns]
-    Relations --> Constraints[PK/FK/Unique/Not null]
-```
+2. Convert ER to relational: high-level rules
+  - The conversion maps ER constructs (entities, relationships, attributes, generalization, aggregation) to tables,
+    primary keys (PK), and foreign keys (FK) while preserving semantics.
 
-## Full Notes
-Use the highlights for a quick scan; expand below for the verbatim PDF text.
-<details>
-<summary>Show raw lecture notes</summary>
+3. Strong entities
+  - Create a table named for the entity; attributes become columns.
+  - Use the entity's primary key as the table's PK.
+  - Add FKs to represent relationships to other tables when needed.
 
-```text
-1. Both ER-Model and Relational Model are abstract logical representation of real world enterprises. Because the two
-models implies the similar design principles, we can convert ER design into Relational design.
-2. Converting a DB representation from an ER diagram to a table format is the way we arrive at Relational DB-design from
-an ER diagram.
-3. ER diagram notations to relations:
-1. Strong Entity
-1. Becomes an individual table with entity name, attributes becomes columns of the relation.
-2. Entitys Primary Key (PK) is used as Relations PK.
-3. FK are added to establish relationships with other relations.
-2. Weak Entity
-1. A table is formed with all the attributes of the entity.
-2. PK of its corresponding Strong Entity will be added as FK .
-3. PK of the relation will be a composite PK, {FK + Partial discriminator Key}.
-3. Single Values Attributes
-1. Represented as columns directly in the tables/relations.
-4. Composite Attributes
-1. Handled by creating a separate attribute itself in the original relation for each composite a ttribute.
-2. e.g., Address: {street-name, house-no}, is a composite a ttribute in customer relation, we add address-street-
-name & address-house-name as new columns in the attribute and ignore address as an attribute.
-5. Multivalued Attributes
-1. New tables (named as original attribute name) are created for each multivalued attribute.
-2. PK of the entity is used as column FK in the new table.
-3. Multivalued attributes similar name is added as a column to define multiple values.
-4. PK of the new table would be {FK + multivalued name}.
-5. e.g., For Strong entity Employee, dependent-name is a multivalued a ttribute.
-1. New table named dependent-name will be formed with columns emp-id, and dname.
-2. PK: {emp-id, name}
-3. FK: {emp-id}
-6. Derived Attributes: Not considered in the tables.
-7. Generalisation
-1. Method-1: Create a table for the higher level entity set. For each lower-level entity set, create a table that
-includes a column for each of the attributes of that entity set plus a column for each a ttribute of the primary key
-of the higher-level entity set.
+4. Weak entities
+  - Create a table containing the weak entity's attributes.
+  - Include the PK of the owner (strong entity) as an FK in the weak-entity table.
+  - The weak-entity table's PK is typically a composite: {owner_PK + partial_key} to preserve dependency.
+
+5. Single-valued attributes
+  - Represent as columns directly in the owning table.
+
+6. Composite attributes
+  - Expand composite attributes into multiple columns in the same table (e.g., Address -> address_street, address_house_no).
+
+7. Multivalued attributes
+  - Create a separate table for the multivalued attribute.
+  - Include the owning entity's PK as an FK column in that table.
+  - The new table's PK is typically {owner_PK, multivalue}.
+  - Example: Employee dependents -> DEPENDENT(emp_id FK, dependent_name, PK(emp_id, dependent_name)).
+
+8. Derived attributes
+  - Do not store derived attributes as persistent columns unless there is a strong performance reason; derive them at query time.
+
+9. Generalization / Specialization (mapping strategies)
+  Method 1 — Superclass table + subclass tables (store PK in subclasses):
+    - Create a table for the superclass with common attributes.
+    - For each subclass, create a table containing subclass attributes plus the superclass PK as FK/PK.
+    - Example: ACCOUNT(account_no PK, balance)
+     - SAVINGS(account_no PK/FK, interest_rate, daily_withdrawal_limit)
+     - CURRENT(account_no PK/FK, overdraft_amount, per_transaction_charges)
+
+  Method 2 — One table per subclass (only when specialization is disjoint and total):
+    - Do not create a superclass table; include superclass attributes in each subclass table.
+    - Example: SAVINGS(account_no PK, balance, interest_rate, daily_withdrawal_limit)
+           CURRENT(account_no PK, balance, overdraft_amount, per_transaction_charges)
+
+  Drawbacks of Method 2:
+    - Overlap or non-total specializations cause duplication or missing representations (e.g., balance duplicated or accounts that belong to neither subclass cannot be represented).
+
+10. Relationships
+  - 1:1 and 1:N: implement by adding a FK in the relation on the "many" side (or choose side based on optionality and access patterns).
+  - M:N: create a junction table containing FKs to both participating tables and any relationship attributes; set a composite PK or unique constraint on the pair of FKs.
+
+11. Aggregation
+  - Represent aggregation (a relationship treated as an entity) by creating a table for the relationship set.
+  - Include PKs of participating entities as columns (FKs) and add any descriptive attributes on the relationship.
+
+12. Practical notes
+  - Preserve total participation by enforcing NOT NULL and FK constraints where applicable.
+  - Choose surrogate vs natural PKs intentionally; use composite keys when necessary to preserve semantics (e.g., weak entities, ordered installments).
+  - Normalize tables to avoid redundancy, but denormalize carefully for performance (e.g., caching counters).
 For e.g., Banking System generalisation of Account - saving & current.
 1. Table 1: account (account-number, balance)
 2. Table 2: savings-account (account-number, interest-rate, daily-withdrawal-limit)

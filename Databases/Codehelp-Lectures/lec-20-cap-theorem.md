@@ -21,41 +21,27 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-1. Basic and one of the most important concept in Distributed Databases.
-2. Useful to know this to design efcient distributed system for your given business logic.
-3. Lets rst breakdown CAP
-1. Consistency: In a consistent system, all nodes see the same data simultaneously. If we perform a read operation on a consistent system, it
-should return the value of the most recent write operation. The read should cause all nodes to return the same data. All users see the same data
-at the same time, regardless of the node they connect to. When data is written to a single node, it is then replicated across the other nodes in
-the system.
-2. Availability: When availability is present in a distributed system, it means that the system remains operational all of the time. Every request
-will get a response regardless of the individual state of the nodes. This means that the system will operate even if there are multiple nodes
-down. Unlike a consistent system, theres no guarantee that the response will be the most recent write operation.
-3. Partition Tolerance: When a distributed system encounters a partition, it means that theres a break in communication between nodes. If a
-system is partition-tolerant, the system does not fail, regardless of whether messages are dropped or delayed between nodes within the
-system. To have partition tolerance, the system must replicate records across combinations of nodes and networks.
-4. What does the CAP Theorem says,
-1. The CAP theorem states that a distributed system can only provide two of three properties simultaneously: consistency, availability, and
-partition tolerance. The theorem formalises the tradeoff between consistency and availability when theres a partition.
-5. CAP Theorem NoSQL Databases: NoSQL databases are great for distributed networks. They allow for horizontal scaling, and they can quickly scale
-across multiple nodes. When deciding which NoSQL database to use, its important to keep the CAP theorem in mind.
-1. CA Databases: CA databases enable consistency and availability across all nodes. Unfortunately, CA databases cant deliver fault tolerance. In
-any distributed system, partitions are bound to happen, which means this type of database isnt a very practical choice. That being said, you still
-can nd a CA database if you need one. Some relational databases, such as MySQL or PostgreSQL, allow for consistency and availability. You can
-deploy them to nodes using replication.
-2. CP Databases: CP databases enable consistency and partition tolerance, but not availability. When a partition occurs, the system has to turn
-off inconsistent nodes until the partition can be xed. MongoDB is an example of a CP database. Its a NoSQL database management system
-(DBMS) that uses documents for data storage. Its considered schema-less, which means that it doesnt require a dened database schema. Its
-commonly used in big data and applications running in different locations. The CP system is structured so that theres only one primary
-node that receives all of the write requests in a given replica set. Secondary nodes replicate the data in the primary nodes, so if the
-primary node fails, a secondary node can stand-in. In banking system Availability is not as important as consistency, so we can opt it
-(MongoDB).
-3. AP Databases: AP databases enable availability and partition tolerance, but not consistency. In the event of a partition, all nodes are available,
-but theyre not all updated. For example, if a user tries to access data from a bad node, they wont receive the most up-to-date version of the
-data. When the partition is eventually resolved, most AP databases will sync the nodes to ensure consistency across them. Apache Cassandra is
-an example of an AP database. Its a NoSQL database with no primary node, meaning that all of the nodes remain available. Cassandra allows
-for eventual consistency because users can re-sync their data right after a partition is resolved. For apps like Facebook, we value availability
-more than consistency, wed opt for AP Databases like Cassandra or Amazon DynamoDB.
+1. CAP theorem — overview
+  - CAP is a fundamental principle for distributed systems: under network partitions, a system must trade between consistency and availability.
+
+2. Definitions
+  - Consistency: every read receives the most recent write (all nodes appear to have the same data at the same time).
+  - Availability: every request receives a response (the system remains operational) even if some nodes are down.
+  - Partition tolerance: the system continues to operate despite arbitrary message loss or network partitioning between nodes.
+
+3. The trade-off
+  - The CAP theorem states that in the presence of a network partition, a distributed system can provide either consistency or availability, but not both.
+  - When there is no partition, a system can be both consistent and available (CA), but partitions are realistic in distributed environments.
+
+4. Examples and choices
+  - CP systems: prioritize consistency and tolerate partitions by sacrificing availability during the split (e.g., some MongoDB configurations, Zookeeper).
+  - AP systems: prioritize availability and tolerate partitions by allowing temporary inconsistency (eventual consistency) such as Cassandra or Dynamo-style systems.
+  - CA systems: provide consistency and availability only when partitions are impossible (single-node or perfectly reliable networks).
+
+5. Practical implications
+  - Choose CP when correctness is critical (banking/payments) and temporary unavailability is acceptable.
+  - Choose AP when low-latency availability is critical and eventual convergence is acceptable (social feeds, caching).
+  - Design for the expected failure modes and pick data models/replication strategies to match application requirements.
 ```
 
 </details>

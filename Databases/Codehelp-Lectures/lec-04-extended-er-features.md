@@ -26,44 +26,39 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-1. Basic ER Features studied in the LEC-3, can be used to model most DB features but when complexity increases, it is
-better to use some Extended ER features to model the DB Schema.
-2. Specialisation
-1. In ER model, we may require to subgroup an entity set into other entity sets that are distinct in some way with other
-entity sets.
-2. Specialisation is splitting up the entity set into further sub entity sets on the basis of their functionalities,
-specialities and features.
-3. It is a Top-Down approach.
-4. e.g., Person entity set can be divided into customer, student, employee. Person is superclass and other specialised
-entity sets are subclasses.
-1. We have is-a relationship between superclass and subclass.
-2. Depicted by triangle component.
-5. Why Specialisation?
-1. Certain attributes may only be applicable to a few entities of
-the parent entity set.
-2. DB designer can show the distinctive features of the sub entities.
-3. To group such entities we apply Specialisation, to overall refine the DB blueprint.
-3. Generalisation
-1. It is just a reverse of Specialisation.
-2. DB Designer, may encounter certain properties of two entities are overlapping. Designer may consider to make a
-new generalised entity set. That generalised entity set will be a super class.
-3. is-a relationship is present between subclass and super class.
-4. e.g., Car, Jeep and Bus all have some common attributes, to avoid data repetition for the common a ttributes. DB
-designer may consider to Generalise to a new entity set Vehicle.
-5. It is a Bottom-up approach.
-6. Why Generalisation?
-1. Makes DB more refined and simpler.
-2. Common attributes are not repeated.
+1. Overview
+  Basic ER features (from Lec-03) model many schemas, but when complexity increases we use Extended ER features
+  to represent richer semantics in the database design.
+
+2. Specialization (Top-down)
+  a. Specialization splits an entity set into sub-entity sets based on distinct behavior, attributes, or roles.
+  b. It is a top-down approach: start with a general superclass and create more specific subclasses.
+  c. Example: Person can be specialized into Customer, Student, Employee. The "is-a" relationship links superclass to subclass and is often shown with a triangle symbol.
+
+  Why use specialization?
+  - Some attributes apply only to a subset of entities in the parent set.
+  - It makes the design clearer by exposing distinctive features of subclasses.
+
+3. Generalization (Bottom-up)
+  a. Generalization is the reverse of specialization: combine similar entity sets into a more general superclass.
+  b. It is a bottom-up approach: factor out common attributes into a new superclass to avoid repetition.
+  c. Example: Car, Jeep, and Bus may be generalized into Vehicle to hold shared attributes.
+
+  Benefits of generalization:
+  - Reduces redundancy and simplifies the schema.
+
 4. Attribute Inheritance
-1. Both Specialisation and Generalisation, has attribute inheritance.
-2. The attributes of higher level entity sets are inherited by lower level entity sets.
-3. E.g., Customer & Employee inherit the a ttributes of Person.
+  a. In both specialization and generalization, attributes defined at a higher level are inherited by lower-level entity sets.
+  b. Example: Customer and Employee inherit attributes (e.g., Name, Address) from Person.
+
 5. Participation Inheritance
-1. If a parent entity set participates in a relationship then its child entity sets will also participate in that relationship.
+  a. If a parent entity set participates in a relationship, its child entity sets typically inherit that participation.
+  b. This semantics must be modeled carefully when translating ER designs to relational schemas.
+
 6. Aggregation
-1. How to show relationships among relationships? - Aggregation is the technique.
-2. Abstraction is applied to treat relationships as higher-level entities. We can call it Abstract entity.
-3. Avoid redundancy by aggregating relationship as an entity set itself.
+  a. Aggregation models relationships among relationships by treating a relationship set as an abstract (higher-level) entity.
+  b. Aggregation is useful when a relationship itself needs to participate in other relationships, or when you want to avoid redundancy.
+  c. Example: a Borrow relationship between Customer, Loan, and Branch can be treated as an aggregate so it can be related to an Auditor entity.
 ```
 
 </details>

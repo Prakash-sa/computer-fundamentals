@@ -23,69 +23,58 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 
 ```text
 1. What is Data?
-a. Data is a collection of raw, unorganized facts and details like text, observations, figures, symbols,
-and descriptions of things etc.
-In other words, data does not carry any specific purpose and has no significance by itself.
-Moreover, data is measured in terms of bits and bytes  which are basic units of information in the
-context of computer storage and processing.
-b. Data can be recorded and doesnt have any meaning unless processed.
+a. Data is a collection of raw, unorganized facts and details such as text, observations, figures, symbols, and descriptions.
+b. By itself, data has no specific purpose or meaning; it becomes useful only when processed.
+c. Data is measured in bits and bytes — the basic units of information in computer storage and processing.
+
 2. Types of Data
 a. Quantitative
-i. Numerical form
-ii. Weight, volume, cost of an item.
+  i. Numerical form.
+  ii. Examples: weight, volume, cost.
 b. Qualitative
-i. Descriptive, but not numerical.
-ii. Name, gender, hair color of a person.
+  i. Descriptive (not numerical).
+  ii. Examples: name, gender, hair color.
+
 3. What is Information?
-a. Info. Is processed, organized, and structured data.
-b. It provides context of the data and enables decision making.
-c. Processed data that make sense to us.
-d. Information is extracted from the data, by analyzing and interpreting pieces of data.
-e. E.g., you have data of all the people living in your locality, its Data, when you analyze and i
-nterpret
-th
-e data and come to some conclusion that:
-i. There are 100 senior citizens.
-ii. The sex ratio is 1.1.
-iii. Newborn babies are 100.
-These are information.
+a. Information is processed, organized, and structured data.
+b. It provides context and enables decision making.
+c. Information is the result of analyzing and interpreting data.
+d. Example: From a dataset of all people in a locality, you can derive:
+  i. There are 100 senior citizens.
+  ii. The sex ratio is 1.1.
+  iii. There are 100 newborn babies.
+  These derived facts are information.
+
 4. Data vs Information
-a. Data is a collection of facts, while information puts those facts into context.
-b. While data is raw and unorganized, information is organized.
-c. Data points are individual and sometimes unrelated. Information maps out that data to provide a
-big-picture view of how it all fits together.
-d. Data, on its own, is meaningless. When its analyzed and interpreted, it becomes meaningful
-information
-.
-e. Da
-ta does not depend on information; however, information depends on data.
-f. Data typically comes in the form of graphs, numbers, figures, or statistics. Information is typically
-pr
-esented through words, language, thoughts, and ideas.
-g. Data isnt sufficient for decision-making, but you can make decisions based on information.
-5. What is Database?
-a. Database is an electronic place/system where data is stored in a way that it can be easily accessed,
-managed, and updated.
-b. To make real use Data, we need Database management system s. (DBMS)
-6. What is DBMS?
-a. A database-management system (DBMS) is a collection of interrelated data and a set of
-programs to access those data. The collection of data, usually referred to as the database,
-contai
-ns information relevant to an enterprise. The primary goal of a DBMS is to provide a way to
-store and retrieve database information that is both convenient and efficient.
-b. A DBMS is the database itself, along with all the software and functionality. It is used to perform
-different operations, like addition, access, updating, and deletion of the data.
-7.
+a. Data are raw facts; information puts those facts into context.
+b. Data is unorganized; information is organized.
+c. Data points can be isolated; information shows how they fit together.
+d. Data alone is meaningless; when analyzed it becomes information.
+e. Information depends on data; data does not depend on information.
+f. Data often appears as numbers, graphs, or statistics; information is expressed through words, ideas, and insights.
+g. Data alone is usually insufficient for decision-making; information supports decisions.
+
+5. What is a Database?
+a. A database is an electronic system where data is stored so it can be easily accessed, managed, and updated.
+b. To make data usable, we need a Database Management System (DBMS).
+
+6. What is a DBMS?
+a. A Database Management System (DBMS) is software that manages a collection of interrelated data and provides programs to access that data.
+b. The database is the organized collection of data relevant to an enterprise; the DBMS provides a convenient and efficient way to store and retrieve that data.
+c. A DBMS supports operations such as insertion, retrieval, update, and deletion.
+
+7. (Reserved / optional section)
+
 8. DBMS vs File Systems
-a. File-processing systems has major disadvantages.
-i. Data Redundancy and inconsistency
-ii. Difficulty in accessing data
-iii. Data isolation
-iv. Integrity problems
-v. Atomicity problems
-vi. Concurrent-access anomalies
-vii. Security problems
-b. Above 7 are also the Advantages of DBMS (answer to Why to use DBMS?)
+a. Traditional file-processing systems have major disadvantages:
+  i. Data redundancy and inconsistency
+  ii. Difficulty in accessing data
+  iii. Data isolation
+  iv. Integrity problems
+  v. Atomicity problems
+  vi. Concurrency (concurrent-access) anomalies
+  vii. Security problems
+b. Addressing the above problems is one of the primary advantages of using a DBMS.
 ```
 
 </details>

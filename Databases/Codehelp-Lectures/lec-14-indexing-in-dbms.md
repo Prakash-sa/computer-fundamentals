@@ -21,68 +21,38 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-1. Indexing is used to optimise the performance of a database by minimising the number of disk accesses required when a query is
-processed.
-2. The index is a type of data structure. It is used to locate and access the data in a database table quickly.
-3. Speeds up operation with read operations like SELECT queries, WHERE clause etc.
-4. Search Key: Contains copy of primary key or candidate key
-of the table or something else.
-5. Data Reference: Pointer holding the address of disk block
-where the value of the corresponding key is stored.
-6. Indexing is optional, but increases access speed. It is not the
-primary mean to access the tuple, it is the secondary mean.
-7. Index file is always sorted.
-8. Indexing Methods
-1. Primary Index (Clustering Index)
-1. A file may have several indices, on dierent search keys. If the data file containing the records is sequentially ordered, a
-Primary index is an index whose search key also de fines the sequential order of the file.
-2. NOTE: The term primary index is sometimes used to mean an index on a primary key. However, such usage is
-nonstandard and should be avoided.
-3. All files are ordered sequentially on some search key. It could be Primary Key or non-primary key.
-4. Dense And Sparse Indices
-1. Dense Index
-1. The dense index contains an index record for every search key value in the data file.
-2. The index record contains the search-key value and a pointer to the first data record with that search-key value.
-The rest of the records with the same search-key value would be stored sequentially after the first record.
-3. It needs more space to store index record itself. The index records have the search key and a pointer to the actual
-record on the disk.
-2. Sparse Index
-1. An index record appears for only some of the search-key values.
-2. Sparse Index helps you to resolve the issues of dense Indexing in DBMS. In this method of indexing technique, a
-range of index columns stores the same data block address, and when data needs to be retrieved, the block
-address will be fetched.
-5. Primary Indexing can be based on Data file is sorted w.r.t Primary Key a ttribute or non-key attributes.
-6. Based on Key attribute
-1. Data file is sorted w.r.t primary key attribute.
-2. PK will be used as search-key in Index.
-3. Sparse Index will be formed i.e., no. of entries in the index file = no. of blocks in datafile.
-7. Based on Non-Key attribute
-1. Data file is sorted w.r.t non-key attribute.
-2. No. Of entries in the index  = unique non-key attribute value in the data file.
-3. This is dense index as, all the unique values have an entry in the
-index file.
-4. E.g., Lets assume that a company recruited many employees in
-various departments. In this case, clustering indexing in DBMS
-should be created for all employees who belong to the same
-dept.
-8. Multi-level Index
-1. Index with two or more levels.
-2. If the single level index become enough large that the binary
-search it self would take much time, we can break down
-indexing into multiple levels.
-2. Secondary Index (Non-Clustering Index)
-1. Datafile is unsorted. Hence, Primary Indexing is not possible.
-2. Can be done on key or non-key attribute.
-3. Called secondary indexing because normally one indexing is already
-applied.
-4. No. Of entries in the index file = no. of records in the data file.
-5. It's an example of Dense index.
-9. Advantages of Indexing
-1. Faster access and retrieval of data.
-2. IO is less.
-10. Limitations of Indexing
-1. Additional space to store index table
-2. Indexing Decrease performance in INSERT, DELETE, and UPDATE query.
+1. What is indexing?
+  - An index is a secondary data structure that provides a fast access path to table rows, reducing disk I/O for lookups and range scans.
+
+2. Components
+  - Search key: the indexed attribute(s) (often PK or a candidate key).
+  - Data reference: a pointer to the data record or block where the corresponding row(s) reside.
+
+3. Index types and properties
+  - Index files are typically sorted on the search key.
+  - Indexing is optional but improves read performance at the cost of extra storage and slower writes.
+
+4. Dense vs sparse indices
+  - Dense index: one index entry per search-key value (or per record); more space, direct mapping.
+  - Sparse index: entries exist for some search keys (e.g., one per block); smaller index, requires block-level search.
+
+5. Primary (clustering) index
+  - If the data file is physically ordered on a search key, a primary (clustering) index uses that order.
+  - Note: "primary index" can also be used informally to mean an index on the primary key; prefer the term "clustering index" for the physical order meaning.
+
+6. Secondary (non-clustering) index
+  - Built on an unordered data file; maps key values to record locations and is typically dense (one entry per record).
+
+7. Multi-level indexes
+  - Break a large index into multiple levels (index of an index) to keep search cost low; B+ trees are a practical multilevel structure.
+
+8. Common implementations
+  - B+ tree: supports ordered scans, range queries, and efficient inserts/ deletes.
+  - Hash index: excellent for equality lookups, poor for range queries.
+
+9. Advantages and trade-offs
+  - Pros: faster retrieval, fewer I/Os, can support covering queries if index contains required columns.
+  - Cons: additional storage, slower INSERT/UPDATE/DELETE due to index maintenance.
 ```
 
 </details>

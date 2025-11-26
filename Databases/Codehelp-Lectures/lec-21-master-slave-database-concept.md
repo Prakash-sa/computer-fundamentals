@@ -22,14 +22,17 @@ Use the highlights for a quick scan; expand below for the verbatim PDF text.
 <summary>Show raw lecture notes</summary>
 
 ```text
-1. Master-Slave is a general way to optimise IO in a system where number of requests goes way high that a single DB server is not able to handle it
-efciently.
-2. Its a Pattern 3 in LEC-19 (Database Scaling Pattern). (Command Query Responsibility Segregation)
-3. The true or latest data is kept in the Master DB thus write operations are directed there. Reading ops are done only from slaves. This architecture
-serves the purpose of safeguarding site reliability, availability, reduce latency etc . If a site receives a lot of trafc and the only available
-database is one master, it will be overloaded with reading and writing requests. Making the entire system slow for everyone on the site.
-4. DB replication will take care of distributing data from Master machine to Slaves machines. This can be synchronous or asynchronous depending
-upon the systems need.
+1. Master–slave (primary–replica) overview
+  - Pattern for scaling read throughput: writes go to the master (primary), reads served by one or more read replicas (slaves).
+
+2. Behavior and trade-offs
+  - The master holds the authoritative copy; replicas receive updates via replication (synchronous or asynchronous).
+  - Read replicas reduce read latency and improve throughput but may lag behind the master (stale reads).
+
+3. Operational considerations
+  - Routing: application or proxy/connection pool must route writes to master and reads to replicas; handle failover and role metadata.
+  - Promotion: promoting a replica to master requires ensuring it has all updates (WAL/relay logs), stopping writes to the old master, and rebuilding other replicas as needed.
+  - Consistency: choose replication mode and read routing carefully to avoid read-after-write surprises.
 ```
 
 </details>
