@@ -1,6 +1,7 @@
 # Computer Networks
 
 - [Video Overview](https://www.youtube.com/watch?v=IPvYjXCsTg8)
+- [Detailed Video](https://www.youtube.com/watch?v=PhjHXeMNpp8)
 
 This directory now breaks the core networking topics into dedicated markdown notes so each subject can grow independently. Start with the list below and dive into the area you want to review or expand.
 

@@ -1,0 +1,314 @@
+-- Consolidated MySQL practice queries with questions noted above each example.
+
+-- ========= Basics: table definitions and constraints =========
+-- How do you create a Users table with an auto-incrementing primary key?
+CREATE TABLE Users (
+	id int NOT NULL AUTO_INCREMENT,
+	username varchar(40) NOT NULL, 
+	password varchar(10) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+-- How do you create a table with a SERIAL/auto-increment primary key?
+CREATE TABLE COMPANY(
+   ID  SERIAL PRIMARY KEY,
+   NAME           TEXT      NOT NULL,
+   AGE            INT       NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+
+-- How do you copy structure (and optionally data) from another table?
+SELECT * INTO NewTable FROM EmployeeInfo WHERE 1 = 0;
+CREATE TABLE NewTable AS SELECT * FROM EmployeeInfo;
+
+-- How do you add, drop, or rename columns on an existing table?
+ALTER TABLE People ADD DateOfBirth date;
+ALTER TABLE People DROP COLUMN DateOfBirth;
+ALTER TABLE People CHANGE FirstName name varchar(100);
+-- RENAME TABLE People TO Users;
+
+-- How do you define NOT NULL columns?
+CREATE TABLE COMPANY1(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+
+-- How do you define a PRIMARY KEY?
+CREATE TABLE COMPANY4(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL
+);
+
+-- How do you enforce UNIQUE values on a column?
+CREATE TABLE COMPANY3(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL UNIQUE,
+   ADDRESS        CHAR(50),
+   SALARY         REAL    DEFAULT 50000.00
+);
+
+-- How do you add a CHECK constraint to guarantee positive salary?
+CREATE TABLE COMPANY5(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT    NOT NULL,
+   AGE            INT     NOT NULL,
+   ADDRESS        CHAR(50),
+   SALARY         REAL    CHECK(SALARY > 0)
+);
+
+-- How do you reference another table with a FOREIGN KEY?
+CREATE TABLE DEPARTMENT1(
+   ID INT PRIMARY KEY      NOT NULL,
+   DEPT           CHAR(50) NOT NULL,
+   EMP_ID         INT      references COMPANY6(ID)
+);
+
+-- How do you create an EXCLUSION constraint to prevent conflicting rows?
+CREATE TABLE COMPANY7(
+   ID INT PRIMARY KEY     NOT NULL,
+   NAME           TEXT,
+   AGE            INT,
+   ADDRESS        CHAR(50),
+   SALARY         REAL,
+   EXCLUDE USING gist
+   (NAME WITH =,
+   AGE WITH <>)
+);
+
+-- ========= Basics: CRUD and filtering =========
+-- How do you insert rows into a table (generic and example)?
+INSERT INTO table_name (column1, column2, column3, ...,columnN) VALUES (value1, value2, value3,...valueN);
+INSERT INTO Employees (ID, FirstName, LastName) VALUES (9, 'Samuel', 'Clark');
+
+-- How do you update rows in a table (generic and example)?
+UPDATE table_name
+SET column1=value1, column2=value2, ...
+WHERE condition;
+
+UPDATE Employees 
+SET Salary=5000, FirstName='Robert'
+WHERE ID=1;
+
+-- How do you delete a specific row?
+DELETE FROM Employees
+WHERE ID=1;
+
+-- How do you fetch students whose roll numbers fall within a range?
+SELECT * FROM Students 
+WHERE ROLL_NO BETWEEN 20 AND 30;
+
+-- How do you fetch students whose roll numbers are in a given set?
+SELECT * FROM Students 
+WHERE ROLL_NO IN (20,21,23);
+
+-- How do you find rows where a name starts with 'Pa' (using % and _ wildcards)?
+SELECT * FROM COMPANY WHERE NAME LIKE 'Pa%';
+
+-- How do you compare dates to return orders before Dec 31, 2014?
+SELECT * FROM OrderArchive
+WHERE OrderDate <= to_date('31 Dec 2014','DD MON YYYY');
+
+-- ========= Basics: joins and set operations =========
+-- How do you perform a LEFT JOIN with a fallback value when no match exists?
+SELECT u.id, CASE WHEN c.country IS NULL THEN 'unknown' ELSE c.country END as country 
+ FROM users u 
+ LEFT JOIN cities c 
+ on u.city=c.city 
+ order by u.id asc;
+
+-- How do you perform a CROSS JOIN of departments and employees?
+select * from departments cross join employees order by dep_name,emp_name;
+
+-- How do you union subscriber lists that include 'Daily' newspapers?
+SELECT subscriber FROM full_year
+WHERE newspaper LIKE '%Daily%'
+UNION 
+SELECT subscriber FROM half_year
+WHERE newspaper LIKE '%Daily%'
+ORDER BY subscriber;
+
+-- How do you compute the INTERSECT of two tables?
+(SELECT * FROM Worker)
+INTERSECT
+(SELECT * FROM WorkerClone);
+
+-- How do you compute the MINUS (set difference) between two tables?
+SELECT * FROM Worker
+MINUS
+SELECT * FROM Title;
+
+-- ========= Basics: grouping and analytics =========
+-- How do you group items and count how many belong to each type?
+select item_name,item_type,count(*) as item_count from availableItems group by 1,2 order by 2,1;
+
+-- How do you aggregate users by continent in descending order?
+select continent,sum(users) as users from countries group by 1 order by 2 desc;
+
+-- How do you concatenate distinct countries into a single string?
+select group_concat(distinct(country) order by country separator';') as countries from diary;
+
+-- How do you format soccer team members as a semicolon-separated list?
+select group_concat(first_name,' ',surname,' #',player_number order by player_number separator '; ') as players from soccer_team;
+
+-- How do you use HAVING to filter directors with more than two oscars since 2000?
+select director from moviesInfo where year>2000 group by 1 having sum(oscars)>2  order by 1;
+
+-- How do you detect duplicate worker_title/affected_from combinations?
+SELECT WORKER_TITLE, AFFECTED_FROM, COUNT(*) FROM Title GROUP BY WORKER_TITLE, AFFECTED_FROM HAVING COUNT(*) > 1;
+
+-- How do you filter rows that have matching data in a correlated subquery using EXISTS?
+SELECT AGE FROM COMPANY WHERE EXISTS (SELECT AGE FROM COMPANY WHERE SALARY > 65000);
+
+-- How do you return even and odd rows by worker id?
+SELECT * FROM Worker WHERE MOD (WORKER_ID, 2) = 0;
+Select * from table where id % 2 = 0;
+SELECT * FROM Worker WHERE MOD (WORKER_ID, 2) <> 0;
+Select * from table where id % 2 != 0;
+
+-- How do you count null, blank, or placeholder department descriptions?
+select count(id) as number_of_nulls from departments where description is null or trim(description) in ('null','nil','-');
+
+-- ========= Basics: views and utilities =========
+-- How do you create or replace a view of employee names and salaries?
+CREATE VIEW List AS
+SELECT FirstName, Salary
+FROM  Employees;
+
+CREATE OR REPLACE VIEW List AS
+SELECT FirstName, LastName, Salary
+FROM  Employees;
+
+-- ========= Advanced: scenarios and puzzles =========
+-- Which candidates have never been in detentions?
+select candidate_id as student_id from candidates where candidate_id  not in ( select student_id from detentions) order by student_id;
+
+-- How do you compute the area of a convex hull around a set of points?
+SELECT ST_Area(ST_ConvexHull(ST_GeomFromText(CONCAT("MULTIPOINT (",GROUP_CONCAT(x,' ',y SEPARATOR ", "),")"),0))) AS area
+    FROM places;
+
+-- Which workers joined in February 2014?
+Select * from Worker where year(JOINING_DATE) = 2014 and month(JOINING_DATE) = 2;
+
+-- Which events happened within 7 days before the latest event?
+select name, event_date
+    from Events
+    where datediff((select max(event_date) from Events), event_date) between 1 and 7
+    order by event_date desc;
+
+-- What is the net profit by year and quarter?
+select year(date)as year,quarter(date) as quarter,(sum(profit) - sum(loss)) as net_profit from accounting group by 1,2;
+
+-- How do you format email sizes as Mb or Kb?
+SELECT id, email_title, 
+        IF(size >= POW(2,20), 
+           CONCAT(FLOOR(size/POW(2,20)), ' Mb'), 
+           CONCAT(FLOOR(size/POW(2,10)), ' Kb')) AS short_size
+    FROM emails
+    ORDER BY size DESC;
+
+-- How do you fetch 50% of records from EmployeeInfo?
+SELECT * 
+FROM EmployeeInfo WHERE
+EmpID <= (SELECT COUNT(EmpID)/2 from EmployeeInfo);
+
+-- How many character combinations exist (product of name lengths)?
+ select round(exp(sum(log(length(characters))))) as combinations from discs;
+
+-- How many leisure places exist per activity type for each country?
+SELECT
+        country,
+        SUM((leisure_activity_type = "Adventure Park") * number_of_places) AS adventure_park,
+        SUM((leisure_activity_type = "Golf") * number_of_places) AS golf,
+        SUM((leisure_activity_type = "River Cruise") * number_of_places) AS river_cruise,
+        SUM((leisure_activity_type = "Kart racing") * number_of_places) AS kart_racing
+    FROM countryActivities
+    GROUP BY country
+    ORDER BY country;
+
+-- How do you return the 3rd highest salary (SQL Server style)?
+SELECT TOP 1 salary FROM ( SELECT TOP 3 salary FROM employee_table ORDER BY salary DESC) AS emp ORDER BY salary ASC;
+
+-- How do you count competitors per country including a total row?
+select ifnull(country,"Total:") as country,count(*) as competitors from foreignCompetitors group by country with rollup;
+
+-- How do you filter valid IPv4 addresses while excluding reserved ones?
+select * from ips where is_ipv4(ip) and ip not in ('1.1.1.1','0.0.0.0') order by id;
+
+-- How do you extract the first author from an XML document?
+select extractvalue(xml_doc, '/descendant-or-self::author[1]') as author from catalogs order by author ;
+    
+-- ========= Common interview-style queries =========
+-- How do you find the second highest salary using LIMIT/OFFSET?
+SELECT salary AS second_highest_salary
+FROM employees
+ORDER BY salary DESC
+LIMIT 1 OFFSET 1;
+
+-- How do you list employees with duplicate email addresses?
+SELECT email, COUNT(*) AS occurrences
+FROM employees
+GROUP BY email
+HAVING COUNT(*) > 1;
+
+-- How do you return departments with more than five employees?
+SELECT department_id, COUNT(*) AS headcount
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) > 5;
+
+-- How do you pair each employee with their manager using a self join?
+SELECT e.employee_id,
+       e.employee_name,
+       m.employee_name AS manager_name
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.employee_id;
+
+-- How do you delete duplicate rows while keeping the lowest id?
+DELETE t1 FROM employees t1
+JOIN employees t2
+  ON t1.email = t2.email
+ AND t1.id > t2.id;
+
+-- How do you increase salary by 10% for a specific department?
+UPDATE employees
+SET salary = salary * 1.10
+WHERE department_id = 5;
+
+-- How do you calculate running totals using window functions?
+SELECT employee_id,
+       department_id,
+       salary,
+       SUM(salary) OVER (PARTITION BY department_id ORDER BY employee_id) AS running_total
+FROM employees;
+
+-- How do you fetch the most recent record per group using ROW_NUMBER?
+WITH ranked AS (
+  SELECT *,
+         ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY created_at DESC) AS rn
+  FROM orders
+)
+SELECT *
+FROM ranked
+WHERE rn = 1;
+
+-- How do you pivot counts of statuses into separate columns?
+SELECT
+  SUM(status = 'open')   AS open_count,
+  SUM(status = 'closed') AS closed_count,
+  SUM(status = 'pending') AS pending_count
+FROM tickets;
+
+-- How do you find customers who placed orders in both 2023 and 2024?
+SELECT customer_id
+FROM orders
+WHERE YEAR(order_date) IN (2023, 2024)
+GROUP BY customer_id
+HAVING COUNT(DISTINCT YEAR(order_date)) = 2;
